@@ -1,4 +1,5 @@
 #include<iostream>
+#include<windows.system.h>
 
 using namespace std;
 
@@ -86,7 +87,7 @@ public:
 				}
 
 			}
-			
+
 			if (previous->get_value() > v)
 			{
 				previous->set_left_node(newnode);
@@ -102,73 +103,47 @@ public:
 
 	}
 
-	
 	void display()
 	{
 		node* current = root;
-		int choice;
 
-		while (1 > 0)
-		{
-			cout << "\nChoose an option" << endl;
-			cout << " 1. Pre-order\n 2. Post-order\n 3. Inorder\n 4. Exit";
-			cin >> choice;
+		cout << "pre-order: " << endl;
+		display_pre_order(current);
+		cout << endl;
 
-			switch (choice)
-			{
-			case 1:
-			{
-				display_pre_order(current);
-			}
-			break;
+		current = root;
+		cout << "\npost-order: " << endl;
+		display_post_order(current);
+		cout << endl;
 
-			case 2:
-			{
-				display_post_order(current);
-			}
-			break;
+		current = root;
+		cout << "\nIn-order: " << endl;
+		display_inorder(current);
+		cout << endl;
 
-			case 3:
-			{
-				display_inorder(current);
-			}
-			break;
-
-			case 4:
-			{
-				exit(0);
-			}
-
-			}
-
-		}
 	}
 
-	void display_pre_order(node *n)
+	void display_pre_order(node* n)
 	{
-		
+
 		if (n != NULL)
 		{
 			cout << n->get_value() << " ";
 			display_pre_order(n->get_left_node());
 			display_pre_order(n->get_right_node());
 
-		}	
-		
+		}
+
 	}
 
 	void display_post_order(node* n)
 	{
 
-		if (n == NULL)
-		{
-			cout << "tree is empty" << endl;
-		}
-		else
+		if (n != NULL)
 		{
 			display_post_order(n->get_left_node());
 			display_post_order(n->get_right_node());
-			cout << n->get_value();
+			cout << n->get_value() << " ";
 		}
 
 	}
@@ -180,7 +155,7 @@ public:
 			display_inorder(n->get_left_node());
 			cout << n->get_value() << " ";
 			display_inorder(n->get_right_node());
-			
+
 		}
 	}
 
@@ -210,6 +185,39 @@ public:
 
 	}
 
+	void search(int v)
+	{
+		node* current = root;
+
+		while ((current != NULL) && (current->get_value() != v))
+		{
+			if (v < current->get_value())
+			{
+				current = current->get_left_node();
+			}
+			else
+			{
+				current = current->get_right_node();
+			}
+
+		}
+
+
+		if (current == NULL)
+		{
+			cout << "value doesnot exists" << endl;
+		}
+
+		else if (current->get_value() == v)
+		{
+			cout << "value you entered exists in bst" << endl;
+		}
+
+
+
+
+	}
+
 };
 
 int main()
@@ -219,9 +227,12 @@ int main()
 
 	while (1 > 0)
 	{
+		system("cls");
+		t1.display();
 		cout << "\nChoose an option" << endl;
-		cout << " 1. insert\n 2. display\n 3. Maximum Value\n 4. Minimum Value\n 5. Exit";
+		cout << " 1. insert\n 2. delete\n 3. Maximum Value\n 4. Minimum Value\n 5. Search\n 6. Exit \n Enter your choice: ";
 		cin >> choice;
+		system("cls");
 
 		switch (choice)
 		{
@@ -238,9 +249,7 @@ int main()
 
 		case 2:
 		{
-			t1.display();
-			system("pause");
-			system("cls");
+
 		}
 		break;
 
@@ -262,8 +271,20 @@ int main()
 
 		case 5:
 		{
+			int v;
+			cout << "enter the value you want to search: ";
+			cin >> v;
+			t1.search(v);
+			system("pause");
+			system("cls");
+		}
+		break;
+
+		case 6:
+		{
 			exit(0);
 		}
+		break;
 
 		}
 
